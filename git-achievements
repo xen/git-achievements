@@ -180,7 +180,7 @@ function check_for_achievements
             count_unlock_achievement "Hunter" "Used git bisect to perform a binary search to find which change introduced a bug." "$1"
             ;;
         blame )
-            count_unlock_achievement "Investigator" "Used git blame to annotates a file with information about how each line changed." "$1"
+            count_unlock_achievement "Investigator" "Used git blame to annotate a file with information about how each line changed." "$1"
             ;;
         bundle )
             count_unlock_achievement "Delivery Boy" "Move objects and refs by archive with git bundle." "$1"
@@ -365,16 +365,18 @@ function publish_achievements
     user=`git config --global user.name`
 
 echo "
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>
 <title>${user}'s Git Achievements</title>
-<link rel=\"alternate\" type=\"application/rss+xml\" title\"rss feed\" href=\"index.rss\"/>
+<link rel=\"alternate\" type=\"application/rss+xml\" title=\"rss feed\" href=\"index.rss\"/>
+<link rel=\"stylesheet\" type=\"text/css\" href=\"http://fonts.googleapis.com/css?family=Cabin+Sketch:bold\"/>
 <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>
 </head>
 <body>
 " > index.html
-    echo "<h2>${user}'s Git Achievements</h2>" >> index.html
+    echo "<h1>${user}'s Git Achievements</h1>" >> index.html
 
     # STATS
     cat git-achievements | grep 'unlock_achievement ' | grep -v ' sed ' | grep -v '\${' | sed -e 's/.*unlock_achievement //g' -e 's/^"//g' -e 's/"$//g' -e 's/\$power/X/g' -e 's/\$count/X/g' -e 's/\$hooks/X/g' | sort | awk -F"\" \"" '{ print "<li><div class=\"title\">" $1 "</div><div class=\"info\">" $2 "</div></li>" }' | link_to_git_docs > all.html
@@ -403,7 +405,7 @@ echo "
     # Locked Achievements
     echo "<script type=\"text/javascript\">
 function showLocked() {
-    document.getElementById('locked').style.visibility = 'visible';
+    document.getElementById('locked').style.display = 'block';
     document.getElementById('showlocked').style.visibility = 'hidden';
 }
 </script>
